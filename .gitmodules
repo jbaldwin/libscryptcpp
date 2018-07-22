@@ -1,0 +1,3 @@
+[submodule "vendor/libscrypt"]
+	path = vendor/libscrypt
+	url = https://github.com/technion/libscrypt
