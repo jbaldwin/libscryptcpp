@@ -29,7 +29,7 @@ add_library(${PROJECT_NAME} STATIC ${LIBSCRIPTCPP_SOURCE_FILES})
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("${PROJECT_NAME} is building Debug")

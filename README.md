@@ -17,6 +17,8 @@ libscryptcpp is a simple C++17 interface around the scrypt library.  It provides
     CMake 3.0.2+
 
 ## Instructions
+If you git clone this repository you also need to init/update the submodule it requires.
+    git submodule update --init --recursive
 
 ### Building
     # To include in your CMakeLists.txt:
