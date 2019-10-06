@@ -6,10 +6,17 @@
 extern "C"
 {
 #include "libscrypt/libscrypt.h"
-}
+} // extern "C"
 
 namespace scrypt
 {
+
+enum class ResultEnum
+{
+    PASSWORD_MATCHES,
+    PASSWORD_DOES_NOT_MATCH,
+    ERROR_DECRYPT_FAILURE
+};
 
 /**
  * Using the scrypt hash algorithm takes a password and generates an 'mcf' data using
@@ -30,16 +37,18 @@ auto hash(
 ) -> std::optional<std::string>;
 
 /**
- * Using the scrypt hash algorithm takes a generated MCF from 'hash()' and a password and checks
- * to see if the two match.
- * @throws std::runtime_error If the check completely fails to decrypt.
- * @param mcf The MCF generated from hash().
+ * Using the scrypt hash algorithm takes a generated MCF from 'hash()'
+ * and a password and checks to see if the two match.
+ * @param mcf The MCF generated from hash().  Note that the underlying scrypt
+ *            library will edit the mcf in place so a copy is required to pass
+ *            into check().  Move the mcf into this function if you do not
+ *            want to take a copy and can give up ownership.
  * @param password The password to check to see if it matches the MCF.
- * @return True if the password is a match, false otherwise.
+ * @return The result status of the check, see ResultEnum for possible results.
  */
 auto check(
     std::string mcf,
     const std::string& password
-) -> bool;
+) -> ResultEnum;
 
 } // namespace scrypt

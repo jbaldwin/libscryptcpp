@@ -22,22 +22,19 @@ auto hash(
 auto check(
     std::string mcf,
     const std::string& password
-) -> bool
+) -> ResultEnum
 {
     int rc = libscrypt_check(mcf.data(), password.data());
 
     // Error to decrypt/check.
     if(rc < 0)
     {
-        throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + " failed to check password.");
+        return ResultEnum::ERROR_DECRYPT_FAILURE;
     }
 
-    if(rc == 0)
-    {
-        return false; // Password is incorrect.
-    }
-
-    return true; // Password is correct.
+    return (rc == 0)
+        ? ResultEnum::PASSWORD_DOES_NOT_MATCH
+        : ResultEnum::PASSWORD_MATCHES;
 }
 
 } // namespace scrypt

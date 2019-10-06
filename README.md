@@ -49,18 +49,16 @@ If you git clone this repository you also need to init/update the submodule it r
 
     std::string mcf = load_mcf_from_database(user);
 
-    try
+    switch(scrypt::check(std::move(mcf), "password"))
     {
-        if(scypt::check(mcf, "password"))
-        {
-            // password matches
-        }
-        else
-        {
-            // password doesn't match
-        }
-    }
-    catch(const std::runtime_error&)
-    {
-        // malformed "MCF"
+        case scrypt::ResultEnum::PASSWORD_MATCH:
+            // Do something if the password matches
+            break;
+        case scrypt::ResultEnum::PASSWORD_DOES_NOT_MATCH:
+            // Do something if the password doesn't match
+            break;
+        case scrypt::ResultEnum::ERROR_DECRYPT_FAILURE:
+            // Internal libscrypt decrypt error, 
+            // possibly malformed MCF.
+            break;
     }
